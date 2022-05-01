@@ -9,9 +9,41 @@ class Card:
     def __str__(self):
         return f"color: {self.color}, number: {self.number}"
 
+class Player:
+    def __init__(self, number, cards:list):
+        self.number = number
+        self.cards = sorted(cards, key=lambda x: x.number)
 
-my_hand = []
-deck = []
+    # Doesn't work yet
+    def sort_hand_by_numbers(self):
+        self.cards.sort(key=lambda x: x.number)
+
+    # Doesn't work yet
+    def sort_hand_by_colors(self):
+        self.cards.sort(key=lambda x: x.color)
+
+
+    def put_cards_at_the_existing_sides(self, board):
+        cards_to_remove_from_hand = []
+        for card in self.cards:
+            for board_group in board:
+                if board_group[0].color == board_group[-1].color and board_group[0].color == card.color:
+                    if (card.number - 1) == board_group[-1].number:
+                        board_group.append(card)
+                        cards_to_remove_from_hand.append(card)
+                        break
+                    elif (card.number + 1) == board_group[0].number:
+                        board_group.insert(0, card)
+                        cards_to_remove_from_hand.append(card)
+                        break
+        for card in cards_to_remove_from_hand:
+            self.cards.remove(card)
+    
+    def print_hand(self):
+        print("____Start Hand____")
+        for card in self.cards:
+            print(card)
+        print("____End Hand____")
 
 # RED = (255,255,255)
 # BLACK = (0,0,0)
@@ -39,39 +71,6 @@ test_board_2 = [
     [Card(YELLOW,1), Card(YELLOW,2), Card(YELLOW,3), Card(YELLOW,4), Card(YELLOW,5), Card(YELLOW,6), Card(YELLOW,7), Card(YELLOW,8), Card(YELLOW,9)]
 ]
 
-
-
-def put_cards_at_the_existing_sides(hand, board):
-    cards_to_remove_from_hand = []
-    for hand_card in hand:
-        for board_group in board:
-            if board_group[0].color == board_group[-1].color and board_group[0].color == hand_card.color:
-                if (hand_card.number - 1) == board_group[-1].number:
-                    board_group.append(hand_card)
-                    cards_to_remove_from_hand.append(hand_card)
-                    break
-                elif (hand_card.number + 1) == board_group[0].number:
-                    board_group.insert(0, hand_card)
-                    cards_to_remove_from_hand.append(hand_card)
-                    break
-    for card in cards_to_remove_from_hand:
-        hand.remove(card)
-
-
-#Create whole deck
-for _ in range(2):
-    #These are 2 jokers
-    deck.append(Card(0,0))
-    for color in colors:
-        for j in range(13):
-            deck.append(Card(color,j))
-
-#Random 14 cards from deck moved to hand
-def start_draw(hand):
-    for _ in range(14):
-        hand.append(deck.pop(random.randint(0, len(deck) -1 )))
-
-# print(test_board)
 def print_board(board):
     print("____Start Board____")
     for group in board:
@@ -79,11 +78,3 @@ def print_board(board):
         for card in group:
             print(card)
     print("____End Board____")
-
-def print_hand(hand):
-    print("____Start Hand____")
-    for card in hand:
-        print(card)
-    print("____End Hand____")
-
-
