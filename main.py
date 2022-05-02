@@ -8,7 +8,7 @@ def group_validation(group):
     
     # If the colors are not matching, all of the numbers must be same, all colors must be different and subset cannot be longer than 4
     if group[0].color != group[-1].color:
-        if group > 4:
+        if len(group) > 4:
             return False
         # Checks if all numbers are the same
         for element in group:
@@ -32,7 +32,7 @@ def group_validation(group):
         # sort group by numbers and check if they are ascending
         group.sort(key = lambda x: x.number)
         for i in range(0, len(group) - 1):
-            if group[i] + 1 != group[i+1]:
+            if group[i].number + 1 != group[i+1].number:
                 return False
         # By eliminating every possible outcome that would make group invalid, function returns True
         return True
@@ -44,3 +44,11 @@ def print_board(board):
         for card in group:
             print(card)
     print("____End Board____")
+
+print(group_validation(valid_test_1)) #True
+print(group_validation(valid_test_2)) #True
+print(group_validation(valid_test_3)) #False
+print(group_validation(valid_test_4)) #False
+print(group_validation(valid_test_5)) #True
+print(group_validation(valid_test_6)) #True
+print(group_validation(valid_test_7)) #False
