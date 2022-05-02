@@ -1,6 +1,4 @@
-from cards import *
 from player import *
-
 
 # Function that checks if given group is valid so it can be put on the board
 def group_validation(group):
@@ -46,7 +44,3 @@ def print_board(board):
         for card in group:
             print(card)
     print("____End Board____")
-
-player_1 = Player(0, test_hand_1)
-player_1.put_cards_at_ends_by_number(test_board_1)
-print_board(test_board_1)

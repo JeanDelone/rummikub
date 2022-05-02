@@ -1,3 +1,5 @@
+from cards import *
+
 class Player:
     def __init__(self, number, cards:list):
         self.number = number
