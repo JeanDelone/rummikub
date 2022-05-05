@@ -43,6 +43,15 @@ test_board_4 = [
     [Card(RED, 2), Card(RED, 3), Card(RED, 4)]
 ]
 
+test_board_69 = [
+    [Card(BLACK, 1), Card(BLUE, 1), Card(RED, 1)],
+    [Card(BLACK, 2), Card(BLUE, 2), Card(RED, 2)],
+    [Card(BLACK, 3), Card(BLUE, 3), Card(RED, 3)],
+    [Card(BLACK, 4), Card(BLACK, 5), Card(BLACK, 6)]
+]
+
+
+
 valid_test_1 = [Card(RED, 1), Card(BLACK, 1), Card(YELLOW, 1)]
 valid_test_2 = [Card(RED, 1), Card(BLACK, 1), Card(YELLOW, 1), Card(BLUE, 1)]
 valid_test_3 = [Card(RED, 1), Card(BLACK, 1), Card(RED, 1), Card(BLUE, 1)]
