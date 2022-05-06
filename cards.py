@@ -50,6 +50,10 @@ test_board_69 = [
     [Card(BLACK, 4), Card(BLACK, 5), Card(BLACK, 6)]
 ]
 
+test_board_70 = [
+    [Card(RED, 1), Card(RED, 2), Card(RED, 3), Card(RED, 4), Card(RED, 5)]
+]
+
 
 
 valid_test_1 = [Card(RED, 1), Card(BLACK, 1), Card(YELLOW, 1)]

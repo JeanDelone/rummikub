@@ -70,6 +70,13 @@ def can_element_be_added_to_group(element, subgroup):
                 return False
         return True
 
+# Checks if subgroup of cards has copy in existing list of cards, used in checking all the permutations
+def has_copy_in_list(group, list):
+    group = sorted(group, key = lambda x: x.color)
+    for element in list:
+        if sorted(element, key = lambda x: x.color) == group:
+            return True
+    return False
 # Simply connects all the subboards to make it into 1
 def make_one_big_board(board):
     one_board = []
@@ -77,8 +84,8 @@ def make_one_big_board(board):
         for element in subboard:
             one_board.append(element)
     return one_board
-
-
+initial_big_board = make_one_big_board(test_board_69)
+list_of_all_sets = []
 
 """
 All code below this comment is not yet finished and currently tested
@@ -87,35 +94,11 @@ Currently I'm testing function that would make all possible subgroups out of the
 
 """
 
-list_of_possible_colorsets = []
-def make_possible_colorsets(board):
-    if len(board) >= 3:
-        possible_colorsets = []
-        for card in board:
-            if can_element_be_added_to_group(card, possible_colorsets):
-                possible_colorsets.append(card)
-                if group_validation(possible_colorsets):
-                    list_of_possible_colorsets.append(possible_colorsets)
-        list_of_possible_colorsets.append(possible_colorsets)
-        board.pop(0)
-        make_possible_colorsets(board)
 
-initial_big_board = make_one_big_board(test_board_69)
-def make_possible_sets(board, starting_card = 0):
-    board = sorted(board, key = lambda x: x.number)
-    if len(board) >= starting_card + 1:
-        possible_sets = []
-        possible_sets.append(board[starting_card])
-        board.pop(starting_card)
-        for card in board:
-            if can_element_be_added_to_group(card, possible_sets):
-                possible_sets.append(card)
-                if group_validation(possible_sets):
-                    list_of_possible_colorsets.append(card)
-            list_of_possible_colorsets.append(possible_sets)
-            make_possible_sets(initial_big_board, starting_card + 1)
 
-# Used to validate sets
+
+
+# Used in the process of making sets, returned set doesn't have to be valid
 def element_for_set_validation(element, set):
     if len(set) == 0:
         return True
@@ -126,15 +109,27 @@ def element_for_set_validation(element, set):
                 return False
         # sort group by numbers and check if element can be added at one of the 2 ends
         set.sort(key = lambda x: x.number)
-        if (element.number + 1) == set[0].number or (element.number - 1) == set[-1].number:
+        if (element.number - 1) == set[-1].number:
             return True
         else:
             return False
     if element.color != set[0].color:
         return False
 
+# Used in the process of making groups with same numbers, doesn't have to be valid 
+def element_for_colorset_validation(element, set):
+    if len(set) == 0:
+        return True
+    if element.color == set[0].color:
+        return False
+    if element.color != set[0].color:
+        for card in set:
+            if card.color == element.color:
+                return False
+            if card.number != element.number:
+                return False
+        return True
 
-list_of_all_sets = []
 def all_sets(board, starting_card = 0):
     if len(board) >= starting_card + 1:
         board = sorted(board, key = lambda x: x.number)
@@ -142,30 +137,33 @@ def all_sets(board, starting_card = 0):
         new_list.append(board[starting_card])
         board.pop(starting_card)
         for card in board:
-            if can_element_be_added_to_group(card, new_list):
+            if element_for_set_validation(card, new_list):
                 new_list.append(card)
             if group_validation(new_list):
-                list_of_all_sets.append(new_list)
+                if not has_copy_in_list(new_list, list_of_all_sets):
+                    list_of_all_sets.append(new_list.copy())
         all_sets(initial_big_board, starting_card + 1)
 
-group_to_remove = []
-for group in list_of_possible_colorsets:
-    if len(group) <= 2:
-        group_to_remove.append(group)
-for group in group_to_remove:
-    list_of_possible_colorsets.remove(group)
+def all_colors(board, starting_card = 0):
+    if len(board) >= starting_card + 1:
+        board = sorted(board, key = lambda x: x.number)
+        new_list = []
+        new_list.append(board[starting_card])
+        board.pop(starting_card)
+        for card in board:
+            if element_for_colorset_validation(card, new_list):
+                new_list.append(card)
+            if group_validation(new_list):
+                if not has_copy_in_list(new_list, list_of_all_sets):
+                    list_of_all_sets.append(new_list.copy())
+            
+        all_colors(initial_big_board, starting_card + 1)
 
 
+# def every_possible_subgroup():
+#     all_possibilities = []
+#     testing = make_one_big_board(test_board_69) 
+#     all_colors(testing)
+#     all_sets(testing)
+#     return all_possibilities
 
-
-
-
-testing = make_one_big_board(test_board_69) 
-
-all_sets(testing)
-# for group in list_of_possible_colorsets:
-#     if len(group) <= 2:
-#         group_to_remove.append(group)
-# for group in group_to_remove:
-#     list_of_possible_colorsets.remove(group)
-print_board(list_of_all_sets)
