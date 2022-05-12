@@ -7,7 +7,7 @@ def print_board(board):
         print("____________________")
         for card in group:
             print(card)
-    print("____End Board____")
+    print(f"____End Board____\nPossible outcomes: {len(board)}")
 
 # Function that checks if given group is valid so it can be put on the board
 def group_validation(group):
@@ -84,7 +84,7 @@ def make_one_big_board(board):
         for element in subboard:
             one_board.append(element)
     return one_board
-initial_big_board = make_one_big_board(test_board_69)
+initial_big_board = make_one_big_board(really_big_board)
 list_of_all_sets = []
 
 """
@@ -160,10 +160,6 @@ def all_colors(board, starting_card = 0):
         all_colors(initial_big_board, starting_card + 1)
 
 
-# def every_possible_subgroup():
-#     all_possibilities = []
-#     testing = make_one_big_board(test_board_69) 
-#     all_colors(testing)
-#     all_sets(testing)
-#     return all_possibilities
-
+all_colors(initial_big_board)
+all_sets(initial_big_board)
+print_board(list_of_all_sets)
