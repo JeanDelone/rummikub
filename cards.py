@@ -7,6 +7,12 @@ class Card:
     def __str__(self):
         return f"color: {self.color}, number: {self.number}"
 
+    def __eq__(self, other):
+        return self.color == other.color and self.number == other.number
+
+
+
+
 RED = "RED"
 BLACK = "BLACK"
 YELLOW = "YELLOW"

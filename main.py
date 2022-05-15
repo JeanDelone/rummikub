@@ -1,3 +1,5 @@
+from telnetlib import XDISPLOC
+from turtle import pos
 from player import *
 
 
@@ -162,4 +164,17 @@ def all_colors(board, starting_card = 0):
 
 all_colors(initial_big_board)
 all_sets(initial_big_board)
+# list_of_all_sets = list(dict.fromkeys(list_of_all_sets))
 print_board(list_of_all_sets)
+
+
+def remove_duplicates(given_group):
+    new_list = []
+    for card in given_group:
+        if card not in new_list:
+            new_list.append(card)
+
+
+initial_big_board = remove_duplicates(initial_big_board)
+# print_board(initial_big_board)
+print(initial_big_board)
