@@ -36,17 +36,7 @@ class Player:
         for card in cards_to_remove_from_hand:
             self.cards.remove(card)
 
-    # Not finished yet, probably will delete later
-    def check_full_solution(self, board):
-        board_without_breakdowns = []
-        cards_to_remove_from_hand = []
-        for group in board:
-            for element in group:
-                board_without_breakdowns.append(element)
-        #Make from 1 to n possible groups and start filling them
-        max_groups = int((len(board_without_breakdowns) + len(self.cards)) / 3)
-        for i in range(1, max_groups + 1):
-            pass
+
 
     # Print hands, to help visualize if functions are working correctly, it's here currently for testing
     def print_hand(self):
