@@ -6,6 +6,8 @@ from player import *
 class Board:
     def __init__(self, board:list):
         self.__board = board
+        self.initial_board = []
+        self.list_of_all_possibilities = []
     """
     ____________ Start of helper funcions ____________________
     """
@@ -18,6 +20,14 @@ class Board:
                 self.initial_board.append(element)
         self.initial_board = sorted(self.initial_board, key=lambda x: x.number)
     
+    def __big_board(self, board):
+        big_board = []
+        for list in board:
+            for element in list:
+                big_board.append(element)
+        return big_board
+        
+
     # Function that checks if given group is valid so it can be put on the board
     def __group_validation(self, group):
         # All groups must be at least 3 cards long, and cannot be longer than 13
@@ -170,7 +180,55 @@ class Board:
             for card in group:
                 print(card)
         print(f"____End Board____\nPossible outcomes: {len(self.possible_subboards)}")
+    
+    def __print_board(self, board):
+        print("____Start Board____")
+        for group in board:
+            print("____________________")
+            for card in group:
+                print(card)
+        print(f"____End Board____")
 
-board1 = Board(really_big_board)
-board1.all_possible_subboards()
-board1.print_board()
+
+    """
+    ______________ Maintaining the board _______________
+    """
+    def add_set_to_board(self, set):
+        self.__board.append(set)
+
+
+    
+    def solve(self, copy_of_initial_board, actual_list, possible_subboards):
+        if len(copy_of_initial_board) == 0:
+            temporary_list_to_check_len = []
+            for set in actual_list:
+                temporary_list_to_check_len.append(set)
+            if len(temporary_list_to_check_len) == len(self.initial_board):
+                return True
+            return False
+        actual_list.append(possible_subboards[0])
+        for element in actual_list[-1]:
+            for element2 in possible_subboards:
+                if element in element2:
+                    possible_subboards.remove(element)
+
+    def solvexd(self, current_leftovers, current_try_list = [], cards_to_back_to = []):
+        if len(current_leftovers) != 0:
+            for element in current_leftovers:
+                current_try_list.append(element)
+                # cards_to_back_to.append(element)
+                temporary_removal_list = []
+                for card in element:
+                    for leftover in current_leftovers:
+                        if card in leftover:
+                            temporary_removal_list.append(leftover)
+                for element in temporary_removal_list:
+                    if element in current_leftovers:
+                        current_leftovers.remove(element)
+                print(f"Len of self.__big_board = {len(self.__big_board(current_try_list))}")
+                print(f"Len of self.__big_board = {len(self.initial_board)}")
+                if len(self.__big_board(current_try_list)) == len(self.initial_board):
+                    self.list_of_all_possibilities.append(current_try_list)
+                self.__print_board(current_try_list)
+                self.solvexd(current_leftovers.copy(), current_try_list.copy())
+        

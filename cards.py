@@ -6,6 +6,9 @@ class Card:
 
     def __str__(self):
         return f"color: {self.color}, number: {self.number}"
+    
+    def __repr__(self):
+        return f"({self.color}, {self.number})"
 
     def __eq__(self, other):
         return self.color == other.color and self.number == other.number
