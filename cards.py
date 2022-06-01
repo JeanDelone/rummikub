@@ -12,6 +12,18 @@ class Card:
 
     def __eq__(self, other):
         return self.color == other.color and self.number == other.number
+    
+    def __lt__(self, other):
+        return self.number < other.number
+
+    def __le__(self, other):
+        return self.number <= other.number
+
+    def __gt__(self, other):
+        return self.number > other.number
+        
+    def __ge__(self, other):
+        return self.number >= other.number
 
 
 
@@ -57,6 +69,13 @@ test_board_69 = [
     [Card(BLACK, 1), Card(BLUE, 1), Card(RED, 1)],
     [Card(BLACK, 2), Card(BLUE, 2), Card(RED, 2)],
     [Card(BLACK, 3), Card(BLUE, 3), Card(RED, 3)],
+    [Card(BLACK, 4), Card(BLACK, 5), Card(BLACK, 6)]
+]
+
+test_board_68 = [
+    [Card(BLACK, 1), Card(BLACK, 2), Card(BLACK, 3)],
+    [Card(RED, 1), Card(RED, 2), Card(RED, 3)],
+    [Card(BLUE, 1), Card(BLUE, 2), Card(BLUE, 3)],
     [Card(BLACK, 4), Card(BLACK, 5), Card(BLACK, 6)]
 ]
 

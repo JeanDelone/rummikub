@@ -233,10 +233,12 @@ class Board:
 
     def solvexdd(self, initial_list, current_try_list = []):
         # n = 1
+        
         for list in initial_list:
             # print(f"Iteration: {n}")
             # n += 1
-            current_try_list.append(list)
+            try_copy = current_try_list.copy()
+            try_copy.append(list)
             temporary_removal_list = []
             initial_copy = initial_list.copy()
             # print("\nstarting for element in list\n")
@@ -252,9 +254,12 @@ class Board:
                 # print(f"Trying to remove {element} \nfrom\n {initial_copy}")
                 # print("\n\n\n")
                 initial_copy.remove(element)
-            print(self.initial_board)
-            print(f"Len of self.intial_board is: {len(self.initial_board)}")
-            if len(self.__big_board(current_try_list)) == len(self.initial_board):
-                if self.__big_board(current_try_list) == self.initial_board():
-                    self.list_of_all_possibilities.append(current_try_list)
-            self.solvexdd(initial_copy.copy(), current_try_list.copy())
+            # print(self.initial_board)
+            # print(f"Len of self.intial_board is: {len(self.initial_board)}")
+            if sorted(self.__big_board(try_copy), key = lambda x: x.number) == sorted(self.initial_board, key = lambda x: x.number):
+                if sorted(try_copy, key = lambda lista: (lista[0].number, len(lista))) not in self.list_of_all_possibilities:
+                    self.list_of_all_possibilities.append(try_copy)
+            # if len(self.__big_board(current_try_list)) == len(self.initial_board):
+            #     if self.__big_board(current_try_list) == self.initial_board():
+            #         self.list_of_all_possibilities.append(current_try_list)
+            self.solvexdd(initial_copy.copy(), try_copy.copy())

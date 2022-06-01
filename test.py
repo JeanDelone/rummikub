@@ -29,7 +29,8 @@ print(lista1==lista3)
 print(lista1==lista2)
 print(lista1)
 print(lista2)
-print(sorted(lista2, key = lambda lista: lista[0].number) == sorted(lista1, key = lambda x: x[0].number))
+print(sorted(lista2, key = lambda lista: sorted(lista, key = lambda x: (x.number, x.color))) == sorted(lista2, key = lambda lista: sorted(lista, key = lambda x: (x.number, x.color))))
+# print(sorted(lista2, key = lambda lista: (lista[0].number, len(lista))) == sorted(lista1, key = lambda x: (x[0].number, len(x))))
 
 
 
