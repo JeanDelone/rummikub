@@ -8,6 +8,7 @@ class Board:
         self.__board = board
         self.initial_board = []
         self.list_of_all_possibilities = []
+        self.possible_subboards = []
     """
     ____________ Start of helper funcions ____________________
     """
@@ -196,39 +197,67 @@ class Board:
     def add_set_to_board(self, set):
         self.__board.append(set)
 
+    """
+    ___________ End of maintaining the board ___________
+    """
 
+
+    # Code below is in the testing phase, doesnt work properly yet
+    # The only thing that doesn't work is going back to make other solutions, it removes 
     
-    def solve(self, copy_of_initial_board, actual_list, possible_subboards):
-        if len(copy_of_initial_board) == 0:
-            temporary_list_to_check_len = []
-            for set in actual_list:
-                temporary_list_to_check_len.append(set)
-            if len(temporary_list_to_check_len) == len(self.initial_board):
-                return True
-            return False
-        actual_list.append(possible_subboards[0])
-        for element in actual_list[-1]:
-            for element2 in possible_subboards:
-                if element in element2:
-                    possible_subboards.remove(element)
+    def solvexd(self, current_leftovers, current_try_list = []):
 
-    def solvexd(self, current_leftovers, current_try_list = [], cards_to_back_to = []):
-        if len(current_leftovers) != 0:
-            for element in current_leftovers:
-                current_try_list.append(element)
-                # cards_to_back_to.append(element)
-                temporary_removal_list = []
-                for card in element:
-                    for leftover in current_leftovers:
-                        if card in leftover:
-                            temporary_removal_list.append(leftover)
-                for element in temporary_removal_list:
-                    if element in current_leftovers:
-                        current_leftovers.remove(element)
-                print(f"Len of self.__big_board = {len(self.__big_board(current_try_list))}")
-                print(f"Len of self.__big_board = {len(self.initial_board)}")
-                if len(self.__big_board(current_try_list)) == len(self.initial_board):
-                    self.list_of_all_possibilities.append(current_try_list)
-                self.__print_board(current_try_list)
-                self.solvexd(current_leftovers.copy(), current_try_list.copy())
-        
+        initial_copy_of_leftovers = current_leftovers.copy()
+
+        for element in initial_copy_of_leftovers:
+            copy_of_leftovers = initial_copy_of_leftovers.copy()
+            current_try_list.append(element)
+            temporary_removal_list = []
+
+            for card in element:
+                for leftover in copy_of_leftovers:
+                    if card in leftover:
+                        temporary_removal_list.append(leftover)
+
+            for element in temporary_removal_list:
+                if element in copy_of_leftovers:
+                    copy_of_leftovers.remove(element)
+
+            
+            if len(self.__big_board(current_try_list)) == len(self.initial_board):
+                self.list_of_all_possibilities.append(current_try_list)
+            # self.__print_board(current_leftovers)
+            # self.__print_board(current_try_list)
+            self.solvexd(copy_of_leftovers.copy(), current_try_list.copy())
+    
+    def solve(self, initial_list):
+
+        szybka_lista = []
+        for list in initial_list:
+            copy_of_initial = initial_list.copy()
+            for element in list:
+                for copy_list in new_copy:
+                    if element in copy_list:
+                        new_copy.remove(copy_list)
+                szybka_lista.append(new_copy)
+        for lista in szybka_lista:
+            print(f"\n***************\nTu nie powinno byc: {element}")
+            print(lista)
+
+    def solvexdd(self, initial_list, current_try_list = []):
+
+        for list in initial_list:
+            current_try_list.append(list)
+            temporary_removal_list = []
+            initial_copy = initial_list.copy()
+            for element in list:
+                for sublist in initial_copy:
+                    if element in sublist:
+                        temporary_removal_list.append(sublist)
+            for element in temporary_removal_list:
+                print(f"Trying to remove {element} from {initial_copy}")
+                print("\n\n\n")
+                # initial_copy.remove(element)
+            if len(self.__big_board(current_try_list)) == len(self.initial_board):
+                self.list_of_all_possibilities.append(current_try_list)
+            # self.solvexdd(initial_copy, current_try_list)

@@ -4,8 +4,8 @@ class Card:
         self.number = number
         self.is_first = is_first
 
-    def __str__(self):
-        return f"color: {self.color}, number: {self.number}"
+    # def __str__(self):
+    #     return f"color: {self.color}, number: {self.number}"
     
     def __repr__(self):
         return f"({self.color}, {self.number})"
