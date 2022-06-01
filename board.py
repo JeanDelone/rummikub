@@ -229,24 +229,13 @@ class Board:
             # self.__print_board(current_leftovers)
             # self.__print_board(current_try_list)
             self.solvexd(copy_of_leftovers.copy(), current_try_list.copy())
-    
-    def solve(self, initial_list):
 
-        szybka_lista = []
-        for list in initial_list:
-            copy_of_initial = initial_list.copy()
-            for element in list:
-                for copy_list in new_copy:
-                    if element in copy_list:
-                        new_copy.remove(copy_list)
-                szybka_lista.append(new_copy)
-        for lista in szybka_lista:
-            print(f"\n***************\nTu nie powinno byc: {element}")
-            print(lista)
 
     def solvexdd(self, initial_list, current_try_list = []):
-
+        n = 1
         for list in initial_list:
+            print(f"Iteration: {n}")
+            n += 1
             current_try_list.append(list)
             temporary_removal_list = []
             initial_copy = initial_list.copy()
@@ -255,9 +244,9 @@ class Board:
                     if element in sublist:
                         temporary_removal_list.append(sublist)
             for element in temporary_removal_list:
-                print(f"Trying to remove {element} from {initial_copy}")
+                print(f"Trying to remove {element} \nfrom\n {initial_copy}")
                 print("\n\n\n")
-                # initial_copy.remove(element)
+                initial_copy.remove(element)
             if len(self.__big_board(current_try_list)) == len(self.initial_board):
                 self.list_of_all_possibilities.append(current_try_list)
             # self.solvexdd(initial_copy, current_try_list)
