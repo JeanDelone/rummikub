@@ -232,21 +232,29 @@ class Board:
 
 
     def solvexdd(self, initial_list, current_try_list = []):
-        n = 1
+        # n = 1
         for list in initial_list:
-            print(f"Iteration: {n}")
-            n += 1
+            # print(f"Iteration: {n}")
+            # n += 1
             current_try_list.append(list)
             temporary_removal_list = []
             initial_copy = initial_list.copy()
+            # print("\nstarting for element in list\n")
             for element in list:
+                # print("starting for sublist in initial_copy")
                 for sublist in initial_copy:
                     if element in sublist:
-                        temporary_removal_list.append(sublist)
+                        # print(f"element is {element}, so im appending {sublist}")
+                        if sublist not in temporary_removal_list:
+                            temporary_removal_list.append(sublist)
+            # print(f"Temporary removal list; {temporary_removal_list}")
             for element in temporary_removal_list:
-                print(f"Trying to remove {element} \nfrom\n {initial_copy}")
-                print("\n\n\n")
+                # print(f"Trying to remove {element} \nfrom\n {initial_copy}")
+                # print("\n\n\n")
                 initial_copy.remove(element)
+            print(self.initial_board)
+            print(f"Len of self.intial_board is: {len(self.initial_board)}")
             if len(self.__big_board(current_try_list)) == len(self.initial_board):
-                self.list_of_all_possibilities.append(current_try_list)
-            # self.solvexdd(initial_copy, current_try_list)
+                if self.__big_board(current_try_list) == self.initial_board():
+                    self.list_of_all_possibilities.append(current_try_list)
+            self.solvexdd(initial_copy.copy(), current_try_list.copy())
