@@ -256,9 +256,11 @@ class Board:
                 initial_copy.remove(element)
             # print(self.initial_board)
             # print(f"Len of self.intial_board is: {len(self.initial_board)}")
-            if sorted(self.__big_board(try_copy), key = lambda x: x.number) == sorted(self.initial_board, key = lambda x: x.number):
-                if sorted(try_copy, key = lambda lista: (lista[0].number, len(lista))) not in self.list_of_all_possibilities:
-                    self.list_of_all_possibilities.append(try_copy)
+            if sorted(self.__big_board(try_copy), key = lambda x: x.number) == sorted(self.initial_board, key = lambda x: x.number) and sorted(try_copy, key = lambda lista: sorted(lista, key = lambda x: (x.number, x.color))) not in self.list_of_all_possibilities:
+                self.list_of_all_possibilities.append(sorted(try_copy, key = lambda lista: sorted(lista, key = lambda x: (x.number, x.color))))
+            # if sorted(self.__big_board(try_copy), key = lambda x: x.number) == sorted(self.initial_board, key = lambda x: x.number):
+            #     if sorted(try_copy, key = lambda lista: (lista[0].number, len(lista))) not in self.list_of_all_possibilities:
+            #         self.list_of_all_possibilities.append(try_copy)
             # if len(self.__big_board(current_try_list)) == len(self.initial_board):
             #     if self.__big_board(current_try_list) == self.initial_board():
             #         self.list_of_all_possibilities.append(current_try_list)
